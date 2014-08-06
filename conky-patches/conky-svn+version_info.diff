@@ -1,0 +1,38 @@
+--- conky.c	2007-10-03 16:53:00.000000000 +0100
++++ conky.c	2007-10-09 22:54:00.000000000 +0100
+@@ -959,6 +959,9 @@
+ 	OBJ_color7,
+ 	OBJ_color8,
+ 	OBJ_color9,
++	OBJ_conky_version,
++	OBJ_conky_build_date,
++	OBJ_conky_build_arch,
+ 	OBJ_font,
+ 	OBJ_cpu,
+ 	OBJ_cpubar,
+@@ -2411,6 +2414,9 @@
+ 		obj->data.l = color9;
+ 	END OBJ(font, 0)
+ 		obj->data.s = scan_font(arg);
++	END OBJ(conky_version, 0)
++	END OBJ(conky_build_date, 0)
++	END OBJ(conky_build_arch, 0)
+ 	END OBJ(downspeed, INFO_NET) 
+ 		if(arg) {
+ 			obj->data.net = get_net_stat(arg);
+@@ -3919,6 +3925,15 @@
+ 				OBJ(color9) {
+ 					new_fg(p, color9);
+ 				}
++				OBJ(conky_version) {
++					snprintf(p, p_max_size, "%s", VERSION);
++				}
++				OBJ(conky_build_date) {
++					snprintf(p, p_max_size, "%s", BUILD_DATE);
++				}
++				OBJ(conky_build_arch) {
++					snprintf(p, p_max_size, "%s", BUILD_ARCH);
++				}
+ #if defined(__linux__)
+ 				OBJ(i8k_version) {
+ 					snprintf(p, p_max_size, "%s", i8k.version);

@@ -1,0 +1,773 @@
+--- src/common.c	2007-08-31 03:05:03.000000000 +0100
++++ src/common.c	2007-10-01 01:04:48.000000000 +0100
+@@ -261,7 +261,6 @@
+ 	if (NEED(INFO_LOADAVG))
+ 		update_load_average();
+ 
+-
+ 	if ((NEED(INFO_MEM) || NEED(INFO_BUFFERS) || NEED(INFO_TOP)) &&
+ 	    current_update_time - last_meminfo_update > 6.9) {
+ 		update_meminfo();
+@@ -285,6 +284,9 @@
+ #endif
+ 	if (NEED(INFO_ENTROPY))
+ 		update_entropy();
++
++        if (NEED(INFO_USERS))
++                update_users();
+ }
+ 
+ int round_to_int(float f)
+
+--- src/config.h	1970-01-01 01:00:00.000000000 +0100
++++ src/config.h	2007-10-01 00:29:00.000000000 +0100
+@@ -0,0 +1,197 @@
++/* src/config.h.  Generated from config.h.in by configure.  */
++/* src/config.h.in.  Generated from configure.ac by autoheader.  */
++
++/* Define for Audacious support */
++/* #undef AUDACIOUS */
++
++/* Define if you want BMPx support */
++/* #undef BMPX */
++
++/* Define for debugging */
++/* #undef DEBUG */
++
++/* Define to 1 if you have the <arpa/inet.h> header file. */
++#define HAVE_ARPA_INET_H 1
++
++/* Define to 1 if you have the <assert.h> header file. */
++#define HAVE_ASSERT_H 1
++
++/* Define to 1 if you have the `calloc' function. */
++#define HAVE_CALLOC 1
++
++/* Define if you have clock_gettime() */
++#define HAVE_CLOCK_GETTIME 1
++
++/* Define to 1 if you have the <dirent.h> header file. */
++#define HAVE_DIRENT_H 1
++
++/* Define to 1 if you have the <dlfcn.h> header file. */
++#define HAVE_DLFCN_H 1
++
++/* Define to 1 if you have the <errno.h> header file. */
++#define HAVE_ERRNO_H 1
++
++/* Define to 1 if you have the `free' function. */
++#define HAVE_FREE 1
++
++/* Define to 1 if you have the `getloadavg' function. */
++#define HAVE_GETLOADAVG 1
++
++/* Define to 1 if you have the `gettimeofday' function. */
++/* #undef HAVE_GETTIMEOFDAY */
++
++/* Define if you have the iconv() function. */
++#define HAVE_ICONV 1
++
++/* Define to 1 if you have the <inttypes.h> header file. */
++#define HAVE_INTTYPES_H 1
++
++/* Define if you want wireless support */
++/* #undef HAVE_IWLIB */
++
++/* Define to 1 if you have the <iwlib.h> header file. */
++/* #undef HAVE_IWLIB_H */
++
++/* Define if you have kstat (Solaris) */
++/* #undef HAVE_KSTAT */
++
++/* Define to 1 if you have the `X11' library (-lX11). */
++/* #undef HAVE_LIBX11 */
++
++/* Define to 1 if you have the <linux/soundcard.h> header file. */
++#define HAVE_LINUX_SOUNDCARD_H 1
++
++/* Define to 1 if you have the `malloc' function. */
++#define HAVE_MALLOC 1
++
++/* Define to 1 if you have the <mcheck.h> header file. */
++#define HAVE_MCHECK_H 1
++
++/* Define to 1 if you have the <memory.h> header file. */
++#define HAVE_MEMORY_H 1
++
++/* Define to 1 if you have the `memrchr' function. */
++#define HAVE_MEMRCHR 1
++
++/* Define to 1 if you have the <netdb.h> header file. */
++#define HAVE_NETDB_H 1
++
++/* Define to 1 if you have the <netinet/in.h> header file. */
++#define HAVE_NETINET_IN_H 1
++
++/* Define to 1 if you have the <netinet/tcp.h> header file. */
++#define HAVE_NETINET_TCP_H 1
++
++/* Define to 1 if you have the `popen' function. */
++#define HAVE_POPEN 1
++
++/* Define to 1 if you have the <pthread.h> header file. */
++#define HAVE_PTHREAD_H 1
++
++/* Define to 1 if you have the <signal.h> header file. */
++#define HAVE_SIGNAL_H 1
++
++/* Define to 1 if you have the <stdint.h> header file. */
++#define HAVE_STDINT_H 1
++
++/* Define to 1 if you have the <stdlib.h> header file. */
++#define HAVE_STDLIB_H 1
++
++/* Define to 1 if you have the <strings.h> header file. */
++#define HAVE_STRINGS_H 1
++
++/* Define to 1 if you have the <string.h> header file. */
++#define HAVE_STRING_H 1
++
++/* Define to 1 if you have the `sysinfo' function. */
++#define HAVE_SYSINFO 1
++
++/* Define to 1 if you have the <sys/mount.h> header file. */
++#define HAVE_SYS_MOUNT_H 1
++
++/* Define to 1 if you have the <sys/param.h> header file. */
++#define HAVE_SYS_PARAM_H 1
++
++/* Define to 1 if you have the <sys/socket.h> header file. */
++#define HAVE_SYS_SOCKET_H 1
++
++/* Define to 1 if you have the <sys/statfs.h> header file. */
++#define HAVE_SYS_STATFS_H 1
++
++/* Define to 1 if you have the <sys/stat.h> header file. */
++#define HAVE_SYS_STAT_H 1
++
++/* Define to 1 if you have the <sys/types.h> header file. */
++#define HAVE_SYS_TYPES_H 1
++
++/* Define to 1 if you have the <sys/utsname.h> header file. */
++#define HAVE_SYS_UTSNAME_H 1
++
++/* Define to 1 if you have the <time.h> header file. */
++#define HAVE_TIME_H 1
++
++/* Define to 1 if you have the <unistd.h> header file. */
++#define HAVE_UNISTD_H 1
++
++/* Define for X11 Xdamage extension */
++#define HAVE_XDAMAGE 1
++
++/* Define for X11 double-buffering */
++#define HAVE_XDBE 1
++
++/* Define if you want hddtemp support */
++#define HDDTEMP 1
++
++/* Define as const if the declaration of iconv() needs const. */
++#define ICONV_CONST 
++
++/* Define if you want MPD support */
++#define MPD 1
++
++/* Define if you want support for window creating */
++#define OWN_WINDOW 1
++
++/* Name of package */
++#define PACKAGE "conky"
++
++/* Define to the address where bug reports for this package should be sent. */
++#define PACKAGE_BUGREPORT "brenden1@users.sourceforge.net"
++
++/* Define to the full name of this package. */
++#define PACKAGE_NAME "Conky"
++
++/* Define to the full name and version of this package. */
++#define PACKAGE_STRING "Conky 1.4.7"
++
++/* Define to the one symbol short name of this package. */
++#define PACKAGE_TARNAME "conky"
++
++/* Define to the version of this package. */
++#define PACKAGE_VERSION "1.4.7"
++
++/* Define if you want rss support */
++/* #undef RSS */
++
++/* Define to 1 if you have the ANSI C header files. */
++#define STDC_HEADERS 1
++
++/* Define if you want tcp port monitoring support */
++#define TCP_PORT_MONITOR 1
++
++/* Version number of package */
++#define VERSION "1.4.7"
++
++/* Define if you want to use X11 */
++#define X11 1
++
++/* Define for Xft support */
++#define XFT 1
++
++/* Define if you want XMMS2 support */
++/* #undef XMMS2 */
++
++/* Define to 1 if the X Window System is missing or not being used. */
++/* #undef X_DISPLAY_MISSING */
++
++/* Define for GNU source and extensions */
++#define _GNU_SOURCE 
+diff -Nau conky-1.4.7/src/config.h.in~ conky-1.4.7.users/src/config.h.in~
+--- conky-1.4.7/src/config.h.in~	1970-01-01 01:00:00.000000000 +0100
++++ conky-1.4.7.users/src/config.h.in~	2007-10-01 01:22:58.000000000 +0100
+@@ -0,0 +1,193 @@
++/* src/config.h.in.  Generated from configure.ac by autoheader.  */
++
++/* Define for Audacious support */
++#undef AUDACIOUS
++
++/* Define if you want BMPx support */
++#undef BMPX
++
++/* Define for debugging */
++#undef DEBUG
++
++/* Define to 1 if you have the <arpa/inet.h> header file. */
++#undef HAVE_ARPA_INET_H
++
++/* Define to 1 if you have the <assert.h> header file. */
++#undef HAVE_ASSERT_H
++
++/* Define to 1 if you have the `calloc' function. */
++#undef HAVE_CALLOC
++
++/* Define if you have clock_gettime() */
++#undef HAVE_CLOCK_GETTIME
++
++/* Define to 1 if you have the <dirent.h> header file. */
++#undef HAVE_DIRENT_H
++
++/* Define to 1 if you have the <errno.h> header file. */
++#undef HAVE_ERRNO_H
++
++/* Define to 1 if you have the `free' function. */
++#undef HAVE_FREE
++
++/* Define to 1 if you have the `getloadavg' function. */
++#undef HAVE_GETLOADAVG
++
++/* Define to 1 if you have the `gettimeofday' function. */
++#undef HAVE_GETTIMEOFDAY
++
++/* Define if you have the iconv() function. */
++#undef HAVE_ICONV
++
++/* Define to 1 if you have the <inttypes.h> header file. */
++#undef HAVE_INTTYPES_H
++
++/* Define if you want wireless support */
++#undef HAVE_IWLIB
++
++/* Define to 1 if you have the <iwlib.h> header file. */
++#undef HAVE_IWLIB_H
++
++/* Define if you have kstat (Solaris) */
++#undef HAVE_KSTAT
++
++/* Define to 1 if you have the `X11' library (-lX11). */
++#undef HAVE_LIBX11
++
++/* Define to 1 if you have the <linux/soundcard.h> header file. */
++#undef HAVE_LINUX_SOUNDCARD_H
++
++/* Define to 1 if you have the `malloc' function. */
++#undef HAVE_MALLOC
++
++/* Define to 1 if you have the <mcheck.h> header file. */
++#undef HAVE_MCHECK_H
++
++/* Define to 1 if you have the <memory.h> header file. */
++#undef HAVE_MEMORY_H
++
++/* Define to 1 if you have the `memrchr' function. */
++#undef HAVE_MEMRCHR
++
++/* Define to 1 if you have the <netdb.h> header file. */
++#undef HAVE_NETDB_H
++
++/* Define to 1 if you have the <netinet/in.h> header file. */
++#undef HAVE_NETINET_IN_H
++
++/* Define to 1 if you have the <netinet/tcp.h> header file. */
++#undef HAVE_NETINET_TCP_H
++
++/* Define to 1 if you have the `popen' function. */
++#undef HAVE_POPEN
++
++/* Define to 1 if you have the <pthread.h> header file. */
++#undef HAVE_PTHREAD_H
++
++/* Define to 1 if you have the <signal.h> header file. */
++#undef HAVE_SIGNAL_H
++
++/* Define to 1 if you have the <stdint.h> header file. */
++#undef HAVE_STDINT_H
++
++/* Define to 1 if you have the <stdlib.h> header file. */
++#undef HAVE_STDLIB_H
++
++/* Define to 1 if you have the <strings.h> header file. */
++#undef HAVE_STRINGS_H
++
++/* Define to 1 if you have the <string.h> header file. */
++#undef HAVE_STRING_H
++
++/* Define to 1 if you have the `sysinfo' function. */
++#undef HAVE_SYSINFO
++
++/* Define to 1 if you have the <sys/mount.h> header file. */
++#undef HAVE_SYS_MOUNT_H
++
++/* Define to 1 if you have the <sys/param.h> header file. */
++#undef HAVE_SYS_PARAM_H
++
++/* Define to 1 if you have the <sys/socket.h> header file. */
++#undef HAVE_SYS_SOCKET_H
++
++/* Define to 1 if you have the <sys/statfs.h> header file. */
++#undef HAVE_SYS_STATFS_H
++
++/* Define to 1 if you have the <sys/stat.h> header file. */
++#undef HAVE_SYS_STAT_H
++
++/* Define to 1 if you have the <sys/types.h> header file. */
++#undef HAVE_SYS_TYPES_H
++
++/* Define to 1 if you have the <sys/utsname.h> header file. */
++#undef HAVE_SYS_UTSNAME_H
++
++/* Define to 1 if you have the <time.h> header file. */
++#undef HAVE_TIME_H
++
++/* Define to 1 if you have the <unistd.h> header file. */
++#undef HAVE_UNISTD_H
++
++/* Define for X11 Xdamage extension */
++#undef HAVE_XDAMAGE
++
++/* Define for X11 double-buffering */
++#undef HAVE_XDBE
++
++/* Define if you want hddtemp support */
++#undef HDDTEMP
++
++/* Define as const if the declaration of iconv() needs const. */
++#undef ICONV_CONST
++
++/* Define if you want MPD support */
++#undef MPD
++
++/* Define if you want support for window creating */
++#undef OWN_WINDOW
++
++/* Name of package */
++#undef PACKAGE
++
++/* Define to the address where bug reports for this package should be sent. */
++#undef PACKAGE_BUGREPORT
++
++/* Define to the full name of this package. */
++#undef PACKAGE_NAME
++
++/* Define to the full name and version of this package. */
++#undef PACKAGE_STRING
++
++/* Define to the one symbol short name of this package. */
++#undef PACKAGE_TARNAME
++
++/* Define to the version of this package. */
++#undef PACKAGE_VERSION
++
++/* Define if you want rss support */
++#undef RSS
++
++/* Define to 1 if you have the ANSI C header files. */
++#undef STDC_HEADERS
++
++/* Define if you want tcp port monitoring support */
++#undef TCP_PORT_MONITOR
++
++/* Version number of package */
++#undef VERSION
++
++/* Define if you want to use X11 */
++#undef X11
++
++/* Define for Xft support */
++#undef XFT
++
++/* Define if you want XMMS2 support */
++#undef XMMS2
++
++/* Define to 1 if the X Window System is missing or not being used. */
++#undef X_DISPLAY_MISSING
++
++/* Define for GNU source and extensions */
++#undef _GNU_SOURCE
+
+--- src/conky.c	2007-08-31 03:05:03.000000000 +0100
++++ src/conky.c	2007-10-01 17:53:09.000000000 +0100
+@@ -416,6 +416,7 @@
+     "$nodename - $sysname $kernel on $machine\n"
+     "$hr\n"
+     "${color grey}Uptime:$color $uptime\n"
++    "${color grey}Number of Users logged in: $color $user_number\n"
+     "${color grey}Frequency (in MHz):$color $freq\n"
+     "${color grey}Frequency (in GHz):$color $freq_g\n"
+     "${color grey}RAM Usage:$color $mem/$memmax - $memperc% ${membar 4}\n"
+@@ -1083,6 +1084,10 @@
+ 	OBJ_upspeedgraph,
+ 	OBJ_uptime,
+ 	OBJ_uptime_short,
++        OBJ_user_names,
++        OBJ_user_terms,
++        OBJ_user_times,
++        OBJ_user_number,
+ 	OBJ_imap,
+ 	OBJ_imap_messages,
+ 	OBJ_imap_unseen,
+@@ -2046,6 +2051,7 @@
+ 				}
+ 				break;
+ #endif
++
+ #ifdef BMPX
+ 			case OBJ_bmpx_title:
+ 			case OBJ_bmpx_artist:
+@@ -2099,6 +2105,24 @@
+ 			case OBJ_entropy_poolsize:
+ 			case OBJ_entropy_bar:
+ 				break;
++                        case OBJ_user_names:
++                                if (info.users.names) {
++                                        free(info.users.names);
++                                        info.users.names = 0;
++                                }
++                                break;
++                        case OBJ_user_terms:
++                                if (info.users.terms) {
++                                        free(info.users.terms);
++                                        info.users.terms = 0;
++                                }
++                                break;
++                        case OBJ_user_times:
++                                if (info.users.times) {
++                                        free(info.users.times);
++                                        info.users.times = 0;
++                                }
++                                break;
+ 		}
+ 	}
+ 	free(objs);
+@@ -3091,7 +3115,12 @@
+ 			obj->b = 25;
+ 		}
+ 	}
+-	END OBJ(uptime_short, INFO_UPTIME) END OBJ(uptime, INFO_UPTIME) END
++
++        END OBJ(user_names, INFO_USERS)
++        END OBJ(user_times, INFO_USERS)
++        END OBJ(user_terms, INFO_USERS)
++        END OBJ(user_number, INFO_USERS)
++        END OBJ(uptime_short, INFO_UPTIME) END OBJ(uptime, INFO_UPTIME) END
+ #ifndef __OpenBSD__
+ 		OBJ(adt746xcpu, 0) END OBJ(adt746xfan, 0) END
+ #endif /* !__OpenBSD__ */
+@@ -4845,6 +4874,18 @@
+ 			OBJ(uptime) {
+ 				format_seconds(p, p_max_size, (int) cur->uptime);
+ 			}
++			OBJ(user_names) {
++				snprintf(p, p_max_size, "%s", cur->users.names);
++			}
++                        OBJ(user_terms) {
++                                snprintf(p, p_max_size, "%s", cur->users.terms);
++                        }
++                        OBJ(user_times) {
++                                snprintf(p, p_max_size, "%s", cur->users.times);
++                        }
++                        OBJ(user_number) {
++                                snprintf(p, p_max_size, "%d", cur->users.number);
++                        }
+ 
+ #if (defined(__FreeBSD__) || defined(__OpenBSD__)) && (defined(i386) || defined(__i386__))
+ 			OBJ(apm_adapter) {
+@@ -6786,6 +6827,10 @@
+     info.xmms2.url = NULL;
+     info.xmms2.status = NULL;
+ #endif
++    info.users.names = NULL;
++    info.users.terms = NULL;
++    info.users.times = NULL;
++    info.users.number = 1;
+ 	use_spacer = 0;
+ #ifdef X11
+ 	out_to_console = 0;
+
+--- src/conky.h	2007-08-31 03:05:03.000000000 +0100
++++ src/conky.h	2007-10-01 15:23:05.000000000 +0100
+@@ -70,6 +70,7 @@
+ #include "prss.h"
+ #endif
+ 
++
+ #include "mboxscan.h"
+ #include "timed_thread.h"
+ 
+@@ -209,6 +210,13 @@
+ };
+ #endif
+ 
++struct usr_info {
++	char *names;
++	char *times;
++	char *terms;
++	int number;
++};
++
+ #ifdef AUDACIOUS
+ struct audacious_s {
+ 	audacious_t items;              /* e.g. items[AUDACIOUS_STATUS] */
+@@ -278,6 +286,8 @@
+ #ifdef RSS
+ 	INFO_RSS = 24,
+ #endif
++	INFO_USERS = 25,
++
+ };
+ 
+ 
+@@ -341,6 +351,7 @@
+ #ifdef BMPX
+ 	struct bmpx_s bmpx;
+ #endif
++	struct usr_info users;
+ 	struct process *cpu[10];
+ 	struct process *memu[10];
+ 	struct process *first_process;
+@@ -476,6 +487,7 @@
+ void format_seconds_short(char *buf, unsigned int n, long t);
+ struct net_stat *get_net_stat(const char *dev);
+ void clear_net_stats(void);
++void update_users();
+ 
+ void update_stuff();
+ 
+diff -Nau conky-1.4.7/src/Makefile.am conky-1.4.7.users/src/Makefile.am
+--- conky-1.4.7/src/Makefile.am	2007-08-29 04:12:38.000000000 +0100
++++ conky-1.4.7.users/src/Makefile.am	2007-10-01 00:28:13.000000000 +0100
+@@ -78,7 +78,8 @@
+ 	mboxscan.c		\
+ 	mboxscan.h		\
+ 	$(x11)                  \
+-	$(xmms2) 
++	$(xmms2) 		\
++	users.c
+ 
+ AM_LDFLAGS = $(PTHREAD_LIBS) -lm
+ 
+diff -Nau conky-1.4.7/src/Makefile.in conky-1.4.7.users/src/Makefile.in
+--- conky-1.4.7/src/Makefile.in	2007-08-31 04:44:35.000000000 +0100
++++ conky-1.4.7.users/src/Makefile.in	2007-10-01 01:24:05.000000000 +0100
+@@ -51,7 +51,7 @@
+ 	conky.c conky.h freebsd.c fs.c hddtemp.c linux.c top.c mail.c \
+ 	mixer.c mpd.c libmpdclient.c openbsd.c libtcp-portmon.h \
+ 	libtcp-portmon.c rss.c prss.c prss.h timed_thread.c \
+-	timed_thread.h mboxscan.c mboxscan.h x11.c xmms2.c
++	timed_thread.h mboxscan.c mboxscan.h x11.c xmms2.c users.c
+ @BUILD_AUDACIOUS_TRUE@am__objects_1 = audacious.$(OBJEXT)
+ @BUILD_BMPX_TRUE@am__objects_2 = bmpx.$(OBJEXT)
+ @BUILD_FREEBSD_TRUE@am__objects_3 = freebsd.$(OBJEXT)
+@@ -68,7 +68,7 @@
+ 	$(am__objects_5) mail.$(OBJEXT) mixer.$(OBJEXT) \
+ 	$(am__objects_6) $(am__objects_7) $(am__objects_8) \
+ 	$(am__objects_9) timed_thread.$(OBJEXT) mboxscan.$(OBJEXT) \
+-	$(am__objects_10) $(am__objects_11)
++	$(am__objects_10) $(am__objects_11) users.$(OBJEXT)
+ conky_OBJECTS = $(am_conky_OBJECTS)
+ conky_LDADD = $(LDADD)
+ DEFAULT_INCLUDES = -I.@am__isrc@
+@@ -152,7 +152,6 @@
+ RANLIB = @RANLIB@
+ RSS_CFLAGS = @RSS_CFLAGS@
+ RSS_LIBS = @RSS_LIBS@
+-SED = @SED@
+ SET_MAKE = @SET_MAKE@
+ SHELL = @SHELL@
+ STRIP = @STRIP@
+@@ -271,7 +270,8 @@
+ 	mboxscan.c		\
+ 	mboxscan.h		\
+ 	$(x11)                  \
+-	$(xmms2) 
++	$(xmms2) 		\
++	users.c
+ 
+ AM_LDFLAGS = $(PTHREAD_LIBS) -lm
+ EXTRA_DIST = \
+@@ -403,6 +403,7 @@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rss.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/timed_thread.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/top.Po@am__quote@
++@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/users.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/x11.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xmms2.Po@am__quote@
+ 
+--- src/users.c	1970-01-01 01:00:00.000000000 +0100
++++ src/users.c	2007-10-01 18:55:43.000000000 +0100
+@@ -0,0 +1,143 @@
++#include "conky.h"
++#include <utmp.h>
++#include <stdio.h>
++#include <string.h>
++#include <stdlib.h>
++#include <time.h>
++
++static void user_name(char **ptr) {
++	const struct utmp *usr;
++	char buf[512];
++
++	setutent();
++	while((usr=getutent())!=NULL) {
++		if (usr->ut_type==USER_PROCESS) {
++			strncat(buf, usr->ut_name, 9); strcat(buf, "\n");
++		}
++	}
++	*ptr = buf;
++}
++static void user_num(int *ptr) {
++        const struct utmp *usr;
++        int users_num = 0;
++
++        setutent();
++        while ((usr=getutent())!=NULL) {
++                if (usr->ut_type==USER_PROCESS) {
++                        ++users_num;
++                }
++        }
++        *ptr = users_num;
++}
++static void user_term(char **ptr) {
++        const struct utmp *usr;
++	char buf[512];
++
++        setutent();
++        while((usr=getutent())!=NULL) {
++                if (usr->ut_type==USER_PROCESS) {
++			strncat(buf, usr->ut_line, 13); strncat(buf, "\n", 3);
++                }
++        }
++	*ptr = buf;
++}
++static void user_time(char **ptr) {
++        const struct utmp *usr;
++        time_t login, real, diff;
++        struct tm *dtime;
++        char buf[512] = "";
++        char output[512] = "";
++
++        setutent();
++        while ((usr=getutent())!=NULL) {
++			if (usr->ut_type==USER_PROCESS) {
++				login=usr->ut_time;
++				time(&real);
++				diff = difftime(real, login);
++				dtime = localtime(&diff);
++				dtime->tm_year = dtime->tm_year-70;
++				dtime->tm_mon = dtime->tm_mon-1;
++				dtime->tm_mday = dtime->tm_mday-1;
++				if(dtime->tm_year>0){strftime(buf,512,"%yy %mm %dd %Hh %Mm\n", dtime); goto end;}
++				else if(dtime->tm_mon>0){strftime(buf,512,"%mm %dd %Hh %Mm\n", dtime); goto end;}
++				else if(dtime->tm_mday>0){strftime(buf,512,"%dd %Hh %Mm\n", dtime); goto end;}
++				else if(dtime->tm_hour>0){strftime(buf,512,"%Hh %Mm\n", dtime); goto end;}
++				else if(dtime->tm_min>0){strftime(buf,512,"%Mm\n", dtime); goto end;}
++				end:
++				strncat(output, buf, 512);
++			}
++        }
++		*ptr = output;
++}
++
++static void users_alloc(struct information *ptr) {
++	if (ptr->users.names == NULL) {
++		ptr->users.names = malloc(TEXT_BUFFER_SIZE);
++
++	}
++	if (ptr->users.terms == NULL) {
++		ptr->users.terms = malloc(TEXT_BUFFER_SIZE);
++	}
++	if (ptr->users.times == NULL) {
++		ptr->users.times = malloc(TEXT_BUFFER_SIZE);
++	}
++}
++
++void update_users() {
++	struct information * current_info = &info;	
++	char *temp;
++	int t;
++	users_alloc(current_info);
++	user_name(&temp);
++	if (temp!=NULL) {
++		if (current_info->users.names) {
++			free(current_info->users.names); current_info->users.names = 0;
++		}
++		current_info->users.names = malloc(TEXT_BUFFER_SIZE);
++		strncpy(current_info->users.names, temp, TEXT_BUFFER_SIZE);
++	} else {
++                if (current_info->users.names) {
++                        free(current_info->users.names); current_info->users.names = 0;
++                }
++		current_info->users.names = malloc(TEXT_BUFFER_SIZE);
++		strncpy(current_info->users.names, "broken", TEXT_BUFFER_SIZE);
++	}
++	user_num(&t);
++	if (t!=0) {
++		if (current_info->users.number) {
++			current_info->users.number = 0;
++		}
++		current_info->users.number = t;
++	} else {
++		current_info->users.number = 0;
++	}
++	temp = "\0";
++	user_term(&temp);
++	if (temp!=NULL) {
++                if (current_info->users.terms) {
++                        free(current_info->users.terms); current_info->users.terms = 0;
++                }
++		current_info->users.terms = malloc(TEXT_BUFFER_SIZE);
++		strncpy(current_info->users.terms, temp, TEXT_BUFFER_SIZE);
++	} else {
++                if (current_info->users.terms) {
++                        free(current_info->users.terms); current_info->users.terms = 0;
++                }
++		current_info->users.terms = malloc(TEXT_BUFFER_SIZE);
++		strncpy(current_info->users.terms, "broken", TEXT_BUFFER_SIZE);
++	}
++	user_time(&temp);
++	if (temp!=NULL) {
++                if (current_info->users.times) {
++                        free(current_info->users.times); current_info->users.times = 0;
++                }
++		current_info->users.times = malloc(TEXT_BUFFER_SIZE);
++		strncpy(current_info->users.times, temp, TEXT_BUFFER_SIZE);
++	} else {
++                if (current_info->users.times) {
++                        free(current_info->users.times); current_info->users.times = 0;
++                }
++		current_info->users.times = malloc(TEXT_BUFFER_SIZE);
++		strncpy(current_info->users.times, "broken", TEXT_BUFFER_SIZE);
++	}
++}
